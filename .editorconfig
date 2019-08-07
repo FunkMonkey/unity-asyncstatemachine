@@ -1,0 +1,296 @@
+# ignore parent editorconfig files
+root = true
+ 
+# Don't use tabs for indentation.
+[*]
+indent_style = space
+# (Please don't specify an indent_size here; that has too many unintended consequences.)
+ 
+# Code files
+[*.{cs,csx,vb,vbx}]
+indent_size = 4
+insert_final_newline = true
+charset = utf-8-bom
+ 
+# XML project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_size = 2
+ 
+# XML config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_size = 2
+ 
+# JSON files
+[*.json]
+indent_size = 2
+ 
+# =============================================================================
+# C# Conventions
+# =============================================================================
+ 
+# see https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+ 
+[*.cs]
+ 
+# -----------------------------------------------------------------------------
+# language conventions
+# -----------------------------------------------------------------------------
+ 
+# --- Code Style: "This." and "Me." qualifiers
+ 
+# Prefer not to be prefaced with this. or Me.
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+ 
+ 
+# --- Code Style: Language keywords instead of framework type names for type
+#                 references
+ 
+# Prefer the language keyword (int instead of Int32)
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:suggestion
+ 
+ 
+# --- Code Style: Modifier preferences
+ 
+# require public/protected/private
+dotnet_style_require_accessibility_modifiers = always:suggestion
+ 
+csharp_preferred_modifier_order = public,private,protected,internal,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,volatile,async:suggestion
+ 
+# Prefer that fields should be marked with readonly (C#)if they are only ever
+# assigned inline, or inside of a constructor
+dotnet_style_readonly_field = true:warning
+ 
+ 
+# --- Code Style: Parentheses preferences
+#                 parentheses needed? (e.g. "a + (b * c)" )
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:silent
+ 
+ 
+# --- Code Style: Expression-level preferences
+ 
+# Prefer objects / collections to be initialized using object initializers when possible
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+ 
+# tuple stuff
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+ 
+# Prefer autoproperties over properties with private backing fields
+dotnet_style_prefer_auto_properties = true:silent
+ 
+# use ?: instead of if-clause
+dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
+dotnet_style_prefer_conditional_expression_over_return = true:suggestion
+ 
+# prefer x += y instead of x = x + y
+dotnet_style_prefer_compound_assignment = true:suggestion
+ 
+# let compiler infer default
+csharp_prefer_simple_default_expression = true:suggestion
+ 
+# --- Code Style: Null checking preferences
+ 
+# use ?? operator
+dotnet_style_coalesce_expression = true:suggestion
+csharp_style_throw_expression = true:suggestion
+ 
+# use ?. operator
+dotnet_style_null_propagation = true:suggestion
+ 
+# use ?. for delegates
+csharp_style_conditional_delegate_call = false:suggestion
+ 
+# --- Code Style: Implicit and explicit types
+ 
+# Prefer explicit type over var
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = false:suggestion
+csharp_style_var_elsewhere = false:suggestion
+ 
+# --- Code Style: Expression-bodied members
+ 
+# prefer blocks {} over expressions =>
+# possible values: true, false, when_on_single_line
+csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+csharp_style_expression_bodied_lambdas = true:silent
+csharp_style_expression_bodied_local_functions = true:silent
+ 
+# --- Code Style: Pattern matching
+ 
+# use is instead of casts or as
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+ 
+ 
+# --- Code Style: Inlined variable declarations
+#                 Prefer out variables to be declared inline
+csharp_style_inlined_variable_declaration = true:suggestion
+ 
+ 
+# --- Code Style: Code block preferences
+ 
+csharp_prefer_braces = true:silent
+ 
+ 
+# --- Code Style: Unused value preferences
+ 
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+ 
+# --- Code Style: Index and range preferences
+ 
+# Prefer to use the ^ operator when calculating an index from the end of a collection
+# (like python)
+csharp_style_prefer_index_operator = true:suggestion
+ 
+# Prefer to use the range operator .. when extracting a "slice" of a collection
+# (like python)
+csharp_style_prefer_range_operator = true:suggestion
+ 
+# --- Code Style: Miscellaneous preferences
+ 
+# use destructuring
+csharp_style_deconstructed_variable_declaration = true:suggestion
+ 
+# Prefer local functions over anonymous functions
+csharp_style_pattern_local_over_anonymous_function = true:suggestion
+ 
+# put "using" outside
+csharp_using_directive_placement = outside_namespace:silent
+ 
+csharp_prefer_static_local_function = true:suggestion
+csharp_prefer_simple_using_statement = true:suggestion
+ 
+# --- Code Quality: Parameter preferences
+ 
+# Flag methods that contain unused parameters
+dotnet_code_quality_unused_parameters = all:suggestion
+ 
+ 
+ 
+# -----------------------------------------------------------------------------
+# format conventions
+# -----------------------------------------------------------------------------
+ 
+# --- Organize Using
+ 
+# Sort System.* using directives alphabetically, and place them before other
+# using directives.
+dotnet_sort_system_directives_first = true
+ 
+# Place a blank line between using directive groups.
+dotnet_separate_import_directive_groups = true
+ 
+ 
+# --- Newline options
+ 
+csharp_new_line_before_open_brace = none # all, none or list
+csharp_new_line_before_else = false
+csharp_new_line_before_catch = false
+csharp_new_line_before_finally = false
+csharp_new_line_before_members_in_object_initializers = false
+csharp_new_line_before_members_in_anonymous_types = false
+csharp_new_line_between_query_expression_clauses = true
+ 
+ 
+# --- Indentation options
+ 
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_labels = flush_left
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents_when_block = true
+ 
+ 
+# --- Spacing options
+ 
+csharp_space_after_cast = true
+csharp_space_after_keywords_in_control_flow_statements = true
+ 
+# values: true, false or list of control_flow_statements, expressions, type_casts
+csharp_space_between_parentheses = false
+ 
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_after_colon_in_inheritance_clause = true
+ 
+# values: before_and_after, ignore, none
+csharp_space_around_binary_operators = before_and_after
+ 
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+ 
+csharp_space_after_comma = true
+csharp_space_before_comma = false
+csharp_space_after_dot = false
+csharp_space_before_dot = false
+ 
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_before_semicolon_in_for_statement = false
+ 
+csharp_space_around_declaration_statements = false
+csharp_space_before_open_square_brackets = false
+csharp_space_between_empty_square_brackets = false
+csharp_space_between_square_brackets = false
+ 
+ 
+# --- Wrap options
+ 
+csharp_preserve_single_line_statements = true
+csharp_preserve_single_line_blocks = true
+ 
+ 
+# -----------------------------------------------------------------------------
+# naming conventions
+# -----------------------------------------------------------------------------
+ 
+# --- symbols
+ 
+dotnet_naming_symbols.all_methods_events_delegates.applicable_kinds           = method,event,delegate
+dotnet_naming_symbols.all_methods_events_delegates.applicable_accessibilities = *
+ 
+dotnet_naming_symbols.public_symbols.applicable_kinds           = property,method,field,event,delegate
+dotnet_naming_symbols.public_symbols.applicable_accessibilities = public
+ 
+dotnet_naming_symbols.non_public_fields_props.applicable_kinds           = property,field,event
+dotnet_naming_symbols.non_public_fields_props.applicable_accessibilities = private_protected
+ 
+# --- styles
+ 
+dotnet_naming_style.first_word_upper_case_style.capitalization  = first_word_upper
+dotnet_naming_style.camel_case_style.capitalization             = camel_case
+ 
+# --- rules
+ 
+# Methods, events and delegates must be capitalized (methods_must_be_capitalized)
+dotnet_naming_rule.methods_must_be_capitalized.symbols          = all_methods_events_delegates
+dotnet_naming_rule.methods_must_be_capitalized.style            = first_word_upper_case_style
+dotnet_naming_rule.methods_must_be_capitalized.severity         = suggestion
+ 
+# Public members must be capitalized (public_members_must_be_capitalized)
+dotnet_naming_rule.public_members_must_be_capitalized.symbols   = public_symbols
+dotnet_naming_rule.public_members_must_be_capitalized.style     = first_word_upper_case_style
+dotnet_naming_rule.public_members_must_be_capitalized.severity  = suggestion
+ 
+# Non-public members fields must be camelCase (non_public_fields_props_must_be_camelcase)
+dotnet_naming_rule.non_public_fields_props_must_be_camelcase.symbols   = non_public_fields_props
+dotnet_naming_rule.non_public_fields_props_must_be_camelcase.style     = camel_case_style
+dotnet_naming_rule.non_public_fields_props_must_be_camelcase.severity  = suggestion
