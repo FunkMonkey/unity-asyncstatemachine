@@ -12,8 +12,17 @@ namespace AsyncStateMachine {
     public delegate void OnSyncEnterCallback<T>(T from);
     public delegate void OnSyncExitCallback<T>(T to);
 
+    public delegate void DebugMessage(string msg);
+
+    public enum DEBUG_MODE {
+        NONE,
+        UNITY_DEBUG_LOG,
+        EVENT
+    }
+
     public class Statemachine<T> {
-        public bool DEBUG_MODE = false;
+
+        public DEBUG_MODE DebugMode = DEBUG_MODE.UNITY_DEBUG_LOG;
 
         public T CurrentState { get; private set; }
         public Transition<T> CurrentTransition { get; private set; }
@@ -27,18 +36,20 @@ namespace AsyncStateMachine {
         public event StateChange<T> OnStateEntered;
         public event StateChange<T> OnStateExited;
 
+        public event DebugMessage OnDebugMessage;
+
         public Statemachine() {
         }
 
         public async UniTask TransitionToState(T state) {
             if (CurrentTransition != null) {
-                Debug.Log("Warning: Statemachine already transitioning");
+                DebugLog("Warning: Statemachine already transitioning from " + CurrentTransition.From + " to " + CurrentTransition.To);
                 return;
             }
 
             if (!firstTransition && state.Equals(CurrentState)) // depending on the type of T, currentState may already be set when we begin
             {
-                Debug.Log("Warning: Statemachine is already in state " + state);
+                DebugLog("Warning: Statemachine is already in state " + state);
                 return;
             }
 
@@ -117,6 +128,18 @@ namespace AsyncStateMachine {
 
         public void RemoveAllStates() {
             states.Clear();
+        }
+
+        protected void DebugLog(string msg) {
+            switch (DebugMode) {
+                case DEBUG_MODE.UNITY_DEBUG_LOG:
+                    Debug.Log(msg);
+                    break;
+                case DEBUG_MODE.EVENT:
+                    OnDebugMessage?.Invoke(msg);
+                    break;
+
+            }
         }
     }
 }
