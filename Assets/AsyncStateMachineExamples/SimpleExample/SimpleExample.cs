@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Events;
-using AsyncStateMachine;
+﻿using UnityEngine;
 using UniRx.Async;
+using AsyncStateMachine;
 
 public class SimpleExample : MonoBehaviour
 {
@@ -18,7 +15,7 @@ public class SimpleExample : MonoBehaviour
 
     Statemachine<State> statemachine = new Statemachine<State>();
 
-    // Using UniTask
+    // State1: using UniTasks
     async UniTask State1_Enter(State from)
     {
         Debug.Log("Entering State 1");
@@ -33,7 +30,7 @@ public class SimpleExample : MonoBehaviour
         Debug.Log("Done Exiting State 1");
     }
 
-    // Using synchrounous callback functions
+    // State2: using synchrounous callback functions
     void State2_Enter(State from)
     {
         Debug.Log("Entering State 2");
@@ -46,7 +43,7 @@ public class SimpleExample : MonoBehaviour
         Debug.Log("Exited State 2");
     }
 
-    // Using Interface
+    // State 3: using IState interface and thus UniTasks
     class State3 : IState<State>
     {
         public async UniTask OnEnter(State from)
@@ -64,7 +61,7 @@ public class SimpleExample : MonoBehaviour
         }
     }
 
-    // Using Sync Interface
+    // State 4: using ISyncState interface
     class State4 : ISyncState<State>
     {
         public void OnEnter(State from)
@@ -80,16 +77,17 @@ public class SimpleExample : MonoBehaviour
         }
     }
 
-    // Use this for initialization
     void Start()
     {
         statemachine.DEBUG_MODE = true;
 
+        // setting up the statemachine
         statemachine.AddStateWithTasks(State.STATE_1, State1_Enter, State1_Exit);
         statemachine.AddStateWithCallbacks(State.STATE_2, State2_Enter, State2_Exit);
         statemachine.AddState(State.STATE_3, new State3());
         statemachine.AddSyncState(State.STATE_4, new State4());
 
+        // setting up optional event callbacks
         statemachine.OnStateEntering += (trans => Debug.Log("Statemachine: Entering state " + trans.To));
         statemachine.OnStateEntered += (trans => Debug.Log("Statemachine: Entered state " + trans.To));
         statemachine.OnStateExiting += (trans => Debug.Log("Statemachine: Exiting state " + trans.From));
@@ -99,7 +97,6 @@ public class SimpleExample : MonoBehaviour
         _ = statemachine.TransitionToState(State.STATE_1);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
