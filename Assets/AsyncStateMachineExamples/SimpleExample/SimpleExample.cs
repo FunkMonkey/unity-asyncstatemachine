@@ -79,8 +79,6 @@ public class SimpleExample : MonoBehaviour
 
     void Start()
     {
-        statemachine.DEBUG_MODE = true;
-
         // setting up the statemachine
         statemachine.AddStateWithTasks(State.STATE_1, State1_Enter, State1_Exit);
         statemachine.AddStateWithCallbacks(State.STATE_2, State2_Enter, State2_Exit);
