@@ -1,0 +1,4 @@
+[submodule "Assets/AsyncStateMachine"]
+	path = Assets/AsyncStateMachine
+	url = ./
+	branch = master
