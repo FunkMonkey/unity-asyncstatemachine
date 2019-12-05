@@ -93,6 +93,34 @@ namespace AsyncStateMachine {
             return state;
         }
 
+        public IState<T> AddState(T id, ISyncState<T> syncState) {
+            return AddSyncState(id, syncState);
+        }
+
+        public IState<T> AddState(T id, OnSyncEnterCallback<T> onEnterCB, OnSyncExitCallback<T> onExitCB) {
+            return AddStateWithCallbacks(id, onEnterCB, onExitCB);
+        }
+
+        public State<T> AddState(T id, OnAsyncEnterCallback<T> onEnterCB, OnAsyncExitCallback<T> onExitCB) {
+            return AddStateWithTasks(id, onEnterCB, onExitCB);
+        }
+
+        public IState<T> AddState(T id, OnSyncEnterCallback<T> onEnterCB, OnAsyncExitCallback<T> onExitCB) {
+            UniTask OnEnter(T from) { onEnterCB(from); return UniTask.CompletedTask; }
+
+            State<T> state = new State<T>(id, OnEnter, onExitCB);
+            AddState(id, state);
+            return state;
+        }
+
+        public State<T> AddState(T id, OnAsyncEnterCallback<T> onEnterCB, OnSyncExitCallback<T> onExitCB) {
+            UniTask OnExit(T to) { onExitCB(to); return UniTask.CompletedTask; }
+
+            State<T> state = new State<T>(id, onEnterCB, OnExit);
+            AddState(id, state);
+            return state;
+        }
+
         public IState<T> AddSyncState(T id, ISyncState<T> syncState) {
             UniTask OnEnter(T from) { syncState.OnEnter(from); return UniTask.CompletedTask; }
             UniTask OnExit(T to) { syncState.OnExit(to); return UniTask.CompletedTask; }
