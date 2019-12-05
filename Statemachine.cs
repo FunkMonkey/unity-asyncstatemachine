@@ -130,6 +130,10 @@ namespace AsyncStateMachine {
             states.Clear();
         }
 
+        public bool IsInTransition() {
+            return CurrentTransition != null;
+        }
+
         protected void DebugLog(string msg) {
             switch (DebugMode) {
                 case DEBUG_MODE.UNITY_DEBUG_LOG:
