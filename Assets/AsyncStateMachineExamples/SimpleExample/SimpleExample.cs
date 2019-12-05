@@ -5,12 +5,13 @@ using AsyncStateMachine;
 public class SimpleExample : MonoBehaviour
 {
 
-    enum State
+    public enum State
     {
         STATE_1,
         STATE_2,
         STATE_3,
-        STATE_4
+        STATE_4,
+        STATE_5
     };
 
     Statemachine<State> statemachine = new Statemachine<State>();
@@ -77,13 +78,17 @@ public class SimpleExample : MonoBehaviour
         }
     }
 
+    // State 5: using MonoBehaviour with Events
+    public SampleAsyncEventState State5;
+
     void Start()
     {
         // setting up the statemachine
-        statemachine.AddStateWithTasks(State.STATE_1, State1_Enter, State1_Exit);
-        statemachine.AddStateWithCallbacks(State.STATE_2, State2_Enter, State2_Exit);
+        statemachine.AddState(State.STATE_1, State1_Enter, State1_Exit);
+        statemachine.AddState(State.STATE_2, State2_Enter, State2_Exit);
         statemachine.AddState(State.STATE_3, new State3());
-        statemachine.AddSyncState(State.STATE_4, new State4());
+        statemachine.AddState(State.STATE_4, new State4());
+        statemachine.AddState(State.STATE_5, State5);
 
         // setting up optional event callbacks
         statemachine.OnStateEntering += (trans => Debug.Log("Statemachine: Entering state " + trans.To));
@@ -112,6 +117,10 @@ public class SimpleExample : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             _ = statemachine.TransitionToState(State.STATE_4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _ = statemachine.TransitionToState(State.STATE_5);
         }
 
     }
